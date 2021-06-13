@@ -1,1 +1,72 @@
-<p>add works!</p>
+<h1>
+  {{ hero.id ? "Editar" : "Nuevo" }}
+  Héroe
+  <small>{{ hero.superhero }}</small>
+</h1>
+
+<div fxLayout="row" fxLayoutGap="40px">
+  <div fxFlex="50" fxLayout="column">
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutGap="20px"
+      fxLayoutAlign="space-between"
+    >
+      <mat-form-field fxFlex="100">
+        <mat-label>Super Héroe</mat-label>
+        <input matInput type="text" [(ngModel)]="hero.superhero" required />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100">
+        <mat-label>Alter Ego</mat-label>
+        <input matInput type="text" [(ngModel)]="hero.alter_ego" required />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Primera Aparición</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="hero.first_appearance"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Personajes</mat-label>
+      <input matInput type="text" [(ngModel)]="hero.characters" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Creador</mat-label>
+      <mat-select [(ngModel)]="hero.publisher" required>
+        <mat-option
+          *ngFor="let pub of publisher | keyvalue"
+          [value]="pub.value"
+        >
+          {{ pub.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Foto Url</mat-label>
+      <input matInput type="url" [(ngModel)]="hero.alt_img" required />
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon> {{ hero.id ? 'Actualizar' : 'Guardar' }}
+      </button>
+
+      <button *ngIf="hero.id" mat-raised-button color="warn" (click)="remove()">
+        <mat-icon>delete</mat-icon>Borrar
+      </button>
+    </div>
+  </div>
+
+  <div fxFlex="50">
+    <img [src]="hero | image" />
+  </div>
+</div>
